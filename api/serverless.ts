@@ -1,3 +1,4 @@
+import getTriviaHero from "@functions/get-trivia-hero";
 import seedHeroes from "@functions/seed-heroes";
 
 import type { AWS } from "@serverless/typescript";
@@ -18,7 +19,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
     },
   },
-  functions: { seedHeroes },
+  functions: { seedHeroes, getTriviaHero },
 
   package: { individually: true },
   custom: {
