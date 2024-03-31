@@ -1,9 +1,6 @@
-import {
-  GameConfiguration,
-  GameConfigurationModel,
-} from "../models/config.model";
+import { GameConfiguration, GameConfigurationModel } from "../models/config.model";
+import { generateHeroConfiguration } from "../utils/generate-hero-configuration";
 import { formatJSONResponse } from "./api-gateway";
-import { AppError } from "./app-error";
 import { DBClient } from "./db-client";
 
 export const wrapReq = async (
@@ -12,12 +9,11 @@ export const wrapReq = async (
   try {
     await DBClient.connect();
 
-    const config = await GameConfigurationModel.findOne();
+    let config = await GameConfigurationModel.findOne();
     if (config == null) {
-      throw new AppError("Heroes not configured", {
-        statusCode: 404,
-        code: "BAD_CONFIG",
-      });
+      config = await new GameConfigurationModel(
+        generateHeroConfiguration()
+      ).save();
     }
 
     return await func(config);

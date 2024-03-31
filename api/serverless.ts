@@ -1,3 +1,5 @@
+import seedHeroes from "@functions/seed-heroes";
+
 import type { AWS } from "@serverless/typescript";
 
 const serverlessConfiguration: AWS = {
@@ -16,7 +18,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
     },
   },
-  functions: {},
+  functions: { seedHeroes },
 
   package: { individually: true },
   custom: {
@@ -29,6 +31,9 @@ const serverlessConfiguration: AWS = {
       define: { "require.resolve": undefined },
       platform: "node",
       concurrency: 10,
+    },
+    "serverless-offline": {
+      noPrependStageInUrl: true,
     },
   },
 };

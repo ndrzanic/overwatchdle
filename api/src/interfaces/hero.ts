@@ -1,11 +1,12 @@
+import { HeroName } from "../constants/hero-names";
 import { Gender } from "./enums/gender";
 import { Occupation } from "./enums/occupation";
 import { Role } from "./enums/role";
 import { WeaponType } from "./enums/weapon-type";
 
 export type Hero = {
-  name: string;
-  splashImage: string;
+  name: HeroName;
+  image: string;
   emoji?: string;
   trivia: TriviaData;
   abilities: Ability[];

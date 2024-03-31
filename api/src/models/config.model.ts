@@ -34,5 +34,6 @@ const schema = new Schema<GameConfiguration>({
 
 export const GameConfigurationModel = model<GameConfiguration>(
   "Config",
-  schema
+  schema,
+  "Config"
 );
