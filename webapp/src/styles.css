@@ -1,0 +1,62 @@
+@font-face {
+  font-family: rem;
+  src: url(assets/fonts/REM-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: rem;
+  src: url(assets/fonts/REM-Thin.ttf) format("truetype");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: rem;
+  src: url(assets/fonts/REM-ThinItalic.ttf) format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  font-family: "rem";
+  min-height: 100%;
+}
+
+* {
+  font-family: "rem", sans-serif;
+}
+
+.background {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  min-height: 100%;
+  z-index: -2;
+  background: url("/assets/background.jpeg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: block;
+  overflow: auto;
+}
+
+.background:after {
+  content: " ";
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  position: absolute;
+  min-height: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: rgba(255, 255, 255, 0.4);
+}

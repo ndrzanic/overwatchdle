@@ -2,6 +2,9 @@
   "name": "overwatchdle",
   "version": "1.0.0",
   "main": "serverless.ts",
+  "scripts": {
+    "offline": "sls offline --reloadHandler"
+  },
   "dependencies": {
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
