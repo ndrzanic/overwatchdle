@@ -1,4 +1,4 @@
-import getTriviaHero from "@functions/get-trivia-hero";
+import getTriviaHero from "@functions/get-classic-hero";
 import seedHeroes from "@functions/seed-heroes";
 
 import type { AWS } from "@serverless/typescript";

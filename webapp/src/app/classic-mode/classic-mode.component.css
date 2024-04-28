@@ -1,0 +1,39 @@
+circle {
+  stroke: #2b3940 !important;
+}
+
+.mat-mdc-form-field-bottom-align {
+  display: none;
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  text-align: center;
+  font-weight: bold;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  border: none !important;
+}
+
+.correct {
+  background-color: #17bf34;
+}
+
+.incorrect {
+  background-color: red;
+}
+
+.partially-correct {
+  background-color: orange;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 50px 10px;
+}
+
+td {
+  padding: 10px 20px;
+}

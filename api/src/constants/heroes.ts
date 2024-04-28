@@ -6,45 +6,6 @@ import { Hero } from "../interfaces/hero";
 import { HeroName } from "./hero-names";
 
 export const heroes: Record<HeroName, Hero> = {
-  Lifeweaver: {
-    name: "Lifeweaver",
-    image:
-      "https://d15f34w2p8l1cc.cloudfront.net/overwatch/39d4514f1b858bc228035b09d5a74ed41f8eeefc9a0d1873570b216ba04334df.png",
-    emoji: "🌹🌲🪷",
-    trivia: {
-      gender: Gender.MALE,
-      role: Role.SUPPORT,
-      occupation: [
-        Occupation.SCIENTIST,
-        Occupation.ARTIST,
-        Occupation.ACTIVIST,
-        Occupation.ADVENTURER,
-      ],
-      weaponType: [WeaponType.PROJECTILE],
-    },
-    abilities: [
-      {
-        name: "Healing Blossom",
-        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/a3ccff02b44507df5c9bdaced0ecd56ac80b33285ad8a60e6c454acf90560579.png",
-      },
-      {
-        name: "Petal Platform",
-        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/f64582890d92e968d79c54f9bb8cf1b9b1cc8da6dca7b8bdc647512957cac89f.png",
-      },
-      {
-        name: "Rejuvenating Dash",
-        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/1df0e1d8798e26772880ac0fcd27cf00c280adff88dbd6a66881f78cd9f69791.png",
-      },
-      {
-        name: "Life Grip",
-        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/36969bea55419b7ff963f2fb0ff7f80e37ecbe810bcd7dae0c7c835270c938a8.png",
-      },
-      {
-        name: "Tree of Life",
-        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/105495a0c2ea708de307204b47c90915782256cffd83fc8dff8abcc508e0ef5a.png",
-      },
-    ],
-  },
   Ana: {
     name: "Ana",
     image:
@@ -504,6 +465,45 @@ export const heroes: Record<HeroName, Hero> = {
       {
         name: "Kitsune Rush",
         icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/f29fd68592d73f20da39d783e0e2f86dcc65c311912d3284062d2bd1a8aa1c52.png",
+      },
+    ],
+  },
+  Lifeweaver: {
+    name: "Lifeweaver",
+    image:
+      "https://d15f34w2p8l1cc.cloudfront.net/overwatch/39d4514f1b858bc228035b09d5a74ed41f8eeefc9a0d1873570b216ba04334df.png",
+    emoji: "🌹🌲🪷",
+    trivia: {
+      gender: Gender.MALE,
+      role: Role.SUPPORT,
+      occupation: [
+        Occupation.SCIENTIST,
+        Occupation.ARTIST,
+        Occupation.ACTIVIST,
+        Occupation.ADVENTURER,
+      ],
+      weaponType: [WeaponType.PROJECTILE],
+    },
+    abilities: [
+      {
+        name: "Healing Blossom",
+        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/a3ccff02b44507df5c9bdaced0ecd56ac80b33285ad8a60e6c454acf90560579.png",
+      },
+      {
+        name: "Petal Platform",
+        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/f64582890d92e968d79c54f9bb8cf1b9b1cc8da6dca7b8bdc647512957cac89f.png",
+      },
+      {
+        name: "Rejuvenating Dash",
+        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/1df0e1d8798e26772880ac0fcd27cf00c280adff88dbd6a66881f78cd9f69791.png",
+      },
+      {
+        name: "Life Grip",
+        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/36969bea55419b7ff963f2fb0ff7f80e37ecbe810bcd7dae0c7c835270c938a8.png",
+      },
+      {
+        name: "Tree of Life",
+        icon: "https://d15f34w2p8l1cc.cloudfront.net/overwatch/105495a0c2ea708de307204b47c90915782256cffd83fc8dff8abcc508e0ef5a.png",
       },
     ],
   },
