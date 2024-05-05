@@ -1,5 +1,13 @@
 import { map, Observable, startWith } from 'rxjs';
 
+import {
+  animate,
+  query,
+  stagger,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { RouterModule } from '@angular/router';
 
 import { HeroName } from '../../constants/hero-names';
 import { Hero } from '../../interfaces/hero';
@@ -34,9 +43,24 @@ import { TraitCorrectnessPipe } from '../trait-correctness.pipe';
     MatInputModule,
     MatTableModule,
     TraitCorrectnessPipe,
+    RouterModule,
   ],
   templateUrl: './classic-mode.component.html',
   styleUrl: './classic-mode.component.css',
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(
+          '.animate',
+          [
+            style({ opacity: 0 }),
+            stagger(750, [animate('0.5s', style({ opacity: 1 }))]),
+          ],
+          { optional: true }
+        ),
+      ]),
+    ]),
+  ],
 })
 export class ClassicModeComponent implements OnInit {
   correctHero!: Hero;
@@ -46,6 +70,9 @@ export class ClassicModeComponent implements OnInit {
   isLoading = true;
 
   showVictoryScreen = false;
+  shouldAnimateRow = false;
+
+  showTooltip = true;
 
   formControl: FormControl;
   filteredHeroes!: Observable<any[]>;
@@ -62,6 +89,9 @@ export class ClassicModeComponent implements OnInit {
   ];
 
   @ViewChild('heroInput') heroInput!: ElementRef;
+  @ViewChild('formField') formField!: ElementRef;
+  @ViewChild('autoComplete') autoComplete!: ElementRef;
+  @ViewChild('center') centerDiv!: ElementRef;
 
   constructor(
     private httpService: HttpService,
@@ -70,8 +100,10 @@ export class ClassicModeComponent implements OnInit {
     this.formControl = new FormControl();
 
     this.filteredHeroes = this.formControl.valueChanges.pipe(
-      startWith(null),
+      startWith(''),
       map((name) => {
+        console.log(name);
+
         if (!name) {
           return this.heroList.filter(
             (hero) => !this.submittedAnswers.includes(hero)
@@ -104,14 +136,17 @@ export class ClassicModeComponent implements OnInit {
       this.isLoading = false;
 
       const localStorageAnswers = this.localStorageService.getTriviaAnswers();
-      this.submittedAnswers = this.heroList.filter((hero) =>
-        localStorageAnswers.includes(hero.name)
-      );
+      localStorageAnswers.forEach((answer) => {
+        const hero = this.heroList.find((hero) => hero.name === answer)!;
+        this.submittedAnswers.push(hero);
+      });
 
       this.verifyGameOver();
 
       this.dataSource = new MatTableDataSource(this.submittedAnswers);
     });
+
+    this.showTooltip = this.localStorageService.getTooltipFlag();
   }
 
   submit(event: MatAutocompleteSelectedEvent) {
@@ -120,14 +155,26 @@ export class ClassicModeComponent implements OnInit {
       return;
     }
 
-    this.heroInput.nativeElement.value = '';
+    this.formControl.patchValue('');
 
     this.localStorageService.pushTriviaAnswer(hero);
     this.submittedAnswers.push(hero);
 
-    this.verifyGameOver();
-
+    this.shouldAnimateRow = true;
     this.dataSource = new MatTableDataSource(this.submittedAnswers);
+  }
+
+  hideTooltip() {
+    this.showTooltip = false;
+
+    this.localStorageService.disableTooltip();
+  }
+
+  async onAnimationEnded() {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 500);
+    });
+    this.verifyGameOver();
   }
 
   verifyGameOver() {

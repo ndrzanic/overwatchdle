@@ -14,8 +14,13 @@ export const heroes: Record<HeroName, Hero> = {
     trivia: {
       gender: Gender.FEMALE,
       role: Role.SUPPORT,
-      occupation: [Occupation.THIEF, Occupation.GANG_LEADER],
-      weaponType: [WeaponType.HITSCAN],
+      occupation: [
+        Occupation.SHARPSHOOTER,
+        Occupation.OVERWATCH,
+        Occupation.CAPTAIN,
+        Occupation.BOUNTY_HUNTER,
+      ],
+      weaponType: [WeaponType.HITSCAN, WeaponType.PROJECTILE],
     },
     abilities: [
       {
@@ -40,13 +45,8 @@ export const heroes: Record<HeroName, Hero> = {
     trivia: {
       gender: Gender.FEMALE,
       role: Role.DPS,
-      occupation: [
-        Occupation.SHARPSHOOTER,
-        Occupation.OVERWATCH,
-        Occupation.CAPTAIN,
-        Occupation.BOUNTY_HUNTER,
-      ],
-      weaponType: [WeaponType.HITSCAN, WeaponType.PROJECTILE],
+      occupation: [Occupation.THIEF, Occupation.GANG_LEADER],
+      weaponType: [WeaponType.HITSCAN],
     },
     abilities: [
       {
@@ -68,14 +68,9 @@ export const heroes: Record<HeroName, Hero> = {
     image:
       "https://d15f34w2p8l1cc.cloudfront.net/overwatch/f979896f74ba22db2a92a85ae1260124ab0a26665957a624365e0f96e5ac5b5c.png",
     trivia: {
-      gender: Gender.FEMALE,
+      gender: Gender.MALE,
       role: Role.SUPPORT,
-      occupation: [
-        Occupation.SHARPSHOOTER,
-        Occupation.OVERWATCH,
-        Occupation.CAPTAIN,
-        Occupation.BOUNTY_HUNTER,
-      ],
+      occupation: [Occupation.COMBAT_MEDIC],
       weaponType: [WeaponType.HITSCAN],
     },
     abilities: [

@@ -14,6 +14,7 @@ export enum Occupation {
   BOUNTY_HUNTER = "Bounty hunter",
   CAPTAIN = "Captain",
   CEO = "CEO",
+  COMBAT_MEDIC = "Combat medic",
   CHIEF_ENGINEER = "Chief engineer",
   CLIMATOLOGIST = "Climatologist",
   CRIMINAL = "Criminal",

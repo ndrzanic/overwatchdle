@@ -1,17 +1,20 @@
 <div class="container">
-  <img src="/assets/logo.webp" style="width: 40%; height: auto" />
+  <img
+    src="/assets/logo_small.webp"
+    style="width: 40%; height: auto"
+    [routerLink]="['/']"
+  />
 
   <div style="margin-top: 20px">
     <div *ngIf="!isLoading; else loader">
       <div *ngIf="!showVictoryScreen; else victoryScreen">
         <div style="margin-top: 15px; display: flex; justify-content: center">
-          <mat-form-field>
+          <mat-form-field #formField>
             <div>
               <input
                 matInput
                 type="text"
                 #heroInput
-                required
                 placeholder="Choose hero..."
                 [matAutocomplete]="auto"
                 [formControl]="formControl"
@@ -19,6 +22,7 @@
               />
             </div>
             <mat-autocomplete
+              #autoComplete
               #auto="matAutocomplete"
               (optionSelected)="submit($event)"
             >
@@ -41,7 +45,12 @@
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div style="margin-top: 25px" *ngIf="submittedAnswers.length > 0">
+        <div
+          style="margin-top: 25px"
+          *ngIf="submittedAnswers.length > 0"
+          [@listAnimation]="submittedAnswers.length"
+          (@listAnimation.done)="onAnimationEnded()"
+        >
           <table
             mat-table
             [dataSource]="dataSource"
@@ -49,7 +58,7 @@
           >
             <ng-container matColumnDef="image">
               <th mat-header-cell *matHeaderCellDef>Hero</th>
-              <td mat-cell *matCellDef="let element">
+              <td mat-cell *matCellDef="let element" class="hero-image">
                 <div
                   style="
                     display: flex;
@@ -69,12 +78,15 @@
               <th mat-header-cell *matHeaderCellDef>Gender</th>
               <td
                 mat-cell
-                *matCellDef="let element"
-                [ngClass]="
+                *matCellDef="let element; let i = index"
+                [ngClass]="[
                   element.trivia.gender === correctHero.trivia.gender
                     ? 'correct'
-                    : 'incorrect'
-                "
+                    : 'incorrect',
+                  i == submittedAnswers.length - 1 && shouldAnimateRow
+                    ? 'animate'
+                    : ''
+                ]"
               >
                 {{ element.trivia.gender.toUpperCase() }}
               </td>
@@ -84,12 +96,15 @@
               <th mat-header-cell *matHeaderCellDef>Role</th>
               <td
                 mat-cell
-                *matCellDef="let element"
-                [ngClass]="
+                *matCellDef="let element; let i = index"
+                [ngClass]="[
                   element.trivia.role === correctHero.trivia.role
                     ? 'correct'
-                    : 'incorrect'
-                "
+                    : 'incorrect',
+                  i == submittedAnswers.length - 1 && shouldAnimateRow
+                    ? 'animate'
+                    : ''
+                ]"
               >
                 {{ element.trivia.role.toUpperCase() }}
               </td>
@@ -99,16 +114,29 @@
               <th mat-header-cell *matHeaderCellDef>Occupation</th>
               <td
                 mat-cell
-                *matCellDef="let element"
-                [ngClass]="
-                  element.trivia.occupation === correctHero.trivia.occupation
-                    ? 'correct'
-                    : 'incorrect'
-                "
+                *matCellDef="let element; let i = index"
+                [ngClass]="[
+                  element.trivia.occupation
+                    | traitCorrectness : correctHero!.trivia!.occupation,
+                  i == submittedAnswers.length - 1 && shouldAnimateRow
+                    ? 'animate'
+                    : ''
+                ]"
               >
-                <p *ngFor="let occupation of element.trivia.occupation">
+                <div
+                  *ngFor="
+                    let occupation of element.trivia.occupation;
+                    let j = index
+                  "
+                  [ngStyle]="{
+                    marginTop: j > 0 ? '8px' : '0px',
+                    marginBottom:
+                      i == element.trivia.occupation.length - 1 ? '8px' : '0px'
+                  }"
+                  style="height: 50px; height: 1em; text-overflow: ellipsis"
+                >
                   {{ occupation.toUpperCase() }}
-                </p>
+                </div>
               </td>
             </ng-container>
 
@@ -116,19 +144,23 @@
               <th mat-header-cell *matHeaderCellDef>Weapon Type</th>
               <td
                 mat-cell
-                *matCellDef="let element"
-                [ngClass]="
+                *matCellDef="let element; let i = index"
+                [ngClass]="[
                   element.trivia.weaponType
-                    | traitCorrectness : correctHero!.trivia!.weaponType
-                "
+                    | traitCorrectness : correctHero!.trivia!.weaponType,
+                  i == submittedAnswers.length - 1 && shouldAnimateRow
+                    ? 'animate'
+                    : ''
+                ]"
               >
                 <div
-                  *ngFor="let trait of element.trivia.weaponType; let i = index"
+                  *ngFor="let trait of element.trivia.weaponType; let j = index"
                   [ngStyle]="{
-                    marginTop: i > 0 ? '5px' : '10px',
+                    marginTop: j > 0 ? '8px' : '0px',
                     marginBottom:
-                      i == element.trivia.occupation.length - 1 ? '5px' : '00px'
+                      i == element.trivia.occupation.length - 1 ? '8px' : '0px'
                   }"
+                  style="height: 50px; height: 1em; text-overflow: ellipsis"
                 >
                   {{ trait.toUpperCase() }}
                 </div>
@@ -138,6 +170,71 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
+
+          <div
+            style="
+              margin-top: 30px;
+              width: 200px;
+              margin-left: auto;
+              margin-right: auto;
+              background-color: #b0b0b0ed;
+              border-radius: 10px;
+              padding-left: 50px;
+              padding-right: 20px;
+              padding-top: 20px;
+              padding-bottom: 20px;
+              border-color: #fea200;
+              border-width: 2px;
+              border-style: solid;
+              margin-bottom: 25px;
+            "
+            *ngIf="showTooltip"
+          >
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <span style="font-size: 18px; color: white"
+                >Color indicators</span
+              >
+              <button
+                mat-mini-fab
+                disableRipple
+                style="
+                  border-width: 1px;
+                  border-style: solid;
+                  background-color: transparent;
+                  color: black;
+                  padding: 0px;
+                "
+                (click)="hideTooltip()"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+
+            <div style="display: flex; margin-top: 10px">
+              <div
+                style="background-color: red; width: 25px; height: 25px"
+              ></div>
+              <span style="margin-left: 5px">Incorrect</span>
+            </div>
+            <div style="display: flex; margin-top: 5px">
+              <div
+                style="background-color: orange; width: 25px; height: 25px"
+              ></div>
+              <span style="margin-left: 5px">Partially correct</span>
+            </div>
+            <div style="display: flex; margin-top: 5px">
+              <div
+                style="background-color: #17bf34; width: 25px; height: 25px"
+              ></div>
+              <span style="margin-left: 5px">Correct</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -152,15 +249,34 @@
             padding: 40px;
             border-radius: 20px;
             color: white;
+            border-style: solid;
+            border-width: 2px;
+            border-color: white;
           "
         >
           <span>You guessed:</span>
           <div style="margin-top: 25px; display: flex; align-items: center">
-            <img [src]="correctHero.image" width="150" height="150" />
+            <img
+              [src]="correctHero.image"
+              width="150"
+              height="150"
+              style="
+                border-style: solid;
+                border-width: 1px;
+                border-color: white;
+              "
+            />
             <span style="margin-left: 15px; font-size: 24px">{{
               correctHero.name
             }}</span>
           </div>
+
+          <span style="margin-top: 15px"
+            >Number of tries:
+            <span style="color: aqua">{{ submittedAnswers.length }}</span></span
+          >
+
+          <span style="margin-top: 35px">Play other modes: </span>
         </div>
       </ng-template>
     </div>

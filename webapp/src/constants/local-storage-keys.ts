@@ -3,6 +3,8 @@ export class LocalStorageKeys {
   static TRIVIA_ANSWERS = 'trivia_answers';
   static TRIVIA_STREAK = 'trivia_streak';
 
+  static SHOW_TOOLTIP = 'show_tooltip';
+
   static ABILITY_CORRECT_ANSWER = 'ability_correct_answer';
   static ABILITY_ANSWERS = 'ability_answers';
   static ABILITY_STREAK = 'ability_streak';

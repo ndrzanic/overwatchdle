@@ -27,4 +27,14 @@ export class LocalStorageService {
       JSON.stringify(answers)
     );
   }
+
+  getTooltipFlag() {
+    return JSON.parse(
+      localStorage.getItem(LocalStorageKeys.SHOW_TOOLTIP) ?? 'true'
+    );
+  }
+
+  disableTooltip() {
+    localStorage.setItem(LocalStorageKeys.SHOW_TOOLTIP, JSON.stringify(false));
+  }
 }

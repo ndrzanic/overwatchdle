@@ -15,7 +15,10 @@ export class TraitCorrectnessPipe implements PipeTransform {
       correctHeroTraits.includes(value)
     );
 
-    if (filteredArray.length === guessedHeroTraits.length) {
+    if (
+      filteredArray.length === guessedHeroTraits.length &&
+      guessedHeroTraits.length == correctHeroTraits.length
+    ) {
       return AnswerCorrectness.CORRECT;
     } else if (filteredArray.length == 0) {
       return AnswerCorrectness.INCORRECT;

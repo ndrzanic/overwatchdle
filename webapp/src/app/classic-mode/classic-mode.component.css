@@ -36,4 +36,11 @@ table {
 
 td {
   padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 15px;
+}
+
+td:not(.hero-image) {
+  box-shadow: rgba(0, 0, 0, 0.11) 0px 5px 10px, rgba(0, 0, 0, 0.19) 0px 3px 10px;
 }
